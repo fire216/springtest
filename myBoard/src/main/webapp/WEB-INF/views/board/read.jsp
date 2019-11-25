@@ -85,6 +85,56 @@
 				</script>
 			</p>
 
+		<div>
+			<ol>
+				<c:forEach items="${repList}" var="repList">
+				<li>
+					<p>
+						작성자 : ${repList.writer}<br/>
+						작성 날짜 : <fmt:formatDate value = "${repList.regDate}" pattern="yyyy-MM-dd" />
+					</p>
+					<p>${repList.content}</p>
+				</li>
+				</c:forEach>
+			</ol>
+			
+			<section class="replyForm">
+				<form role = "form" method = "post" autocomplete="off">
+					
+				<input type = "hidden" id="bno" name="bno" value="${read.bno }" readonly="readonly" />
+				<input type = "hidden" id="page" name="page" value="${scri.page }" readonly="readonly" />
+				<input type = "hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum }" readonly="readonly" />
+				<input type = "hidden" id="searchType" name="searchType" value="${scri.searchType }" readonly="readonly" />
+				<input type = "hidden" id="keyword" name="keyword" value="${scri.keyword }" readonly="readonly" />
+					
+				<p>
+					<label for="writer">작성자</label>
+					<input type="text" id="writer" name="writer" />
+				</p>
+				<p>
+					<label for="content">댓글 내용</label>
+					<textarea id="content" name="content"></textarea>
+				</p>
+					
+				<p>
+					<button type="button" class="repSubmit">작성</button>
+					
+					<script>
+						var formObj = $(".replyForm form[role='form']");
+						
+						$(".repSubmit").click(function(){
+							formObj.attr("action", "replyWrite");
+							formObj.submit();
+						});
+						
+					</script>
+				</p>
+				
+				</form>
+			</section>
+			
+		</div>
+
 		</section>
 		<hr />
 		<footer>

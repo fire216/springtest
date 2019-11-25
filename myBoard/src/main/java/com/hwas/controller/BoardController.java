@@ -17,8 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hwas.domain.BoardVO;
 import com.hwas.domain.Criteria;
 import com.hwas.domain.PageMaker;
+import com.hwas.domain.ReplyVO;
 import com.hwas.domain.SearchCriteria;
 import com.hwas.service.BoardService;
+import com.hwas.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/*")
@@ -29,6 +31,9 @@ public class BoardController {
 	@Inject
 	BoardService service;
 
+	@Inject
+	ReplyService RepService;
+	
 	// 글 작성 get
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void getWrite() throws Exception {
@@ -65,6 +70,9 @@ public class BoardController {
 
 		model.addAttribute("read", vo);
 		model.addAttribute("scri", scri);
+		
+		List<ReplyVO> repList = RepService.readReply(bno);
+		model.addAttribute("repList", repList);
 	}
 
 	// 글 수정 get
@@ -149,5 +157,20 @@ public class BoardController {
 		pageMaker.setTotalCount(service.countSearch(scri));
 		model.addAttribute("pageMaker", pageMaker);
 	}
-
+	
+	// 댓글 작성
+	@RequestMapping(value = "/replyWrite", method = RequestMethod.POST)
+	public String replyWrite(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+		logger.info("reply write");
+		
+		RepService.writeReply(vo);
+		
+		rttr.addAttribute("bno", vo.getBno());
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());
+		
+		return "redirect:/board/read";	
+	}
 }
