@@ -173,4 +173,66 @@ public class BoardController {
 		
 		return "redirect:/board/read";	
 	}
+	
+	//댓글 수정 post
+	@RequestMapping(value="/replyUpdate", method = RequestMethod.POST)
+	public String replyUpdate(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception{
+		logger.info("reply update");
+		
+		RepService.replyUpdate(vo);
+		
+		rttr.addAttribute("bno", vo.getBno());
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());		
+		
+		return "redirect:/board/read";
+		
+	}
+	
+	//댓글 삭제 post
+	@RequestMapping(value="/replyDelete", method = RequestMethod.POST)
+	public String replyDelete(ReplyVO vo, SearchCriteria scri, RedirectAttributes rttr) throws Exception{
+		logger.info("reply delete");
+			
+		RepService.replyDelete(vo);
+			
+		rttr.addAttribute("bno", vo.getBno());
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());		
+			
+		return "redirect:/board/read";
+			
+		}
+	
+	//댓글 수정 get
+	@RequestMapping(value = "/replyUpdate", method = RequestMethod.GET)
+	public void getReplyUpdate(@RequestParam("rno") int rno,
+								@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+		logger.info("reply update");
+		
+		ReplyVO vo = null;
+		
+		vo = RepService.readReplySelect(rno);
+		
+		model.addAttribute("readReply", vo);
+		model.addAttribute("scri", scri);
+	}
+	
+	//댓글 삭제 get
+	@RequestMapping(value = "/replyDelete", method = RequestMethod.GET)
+	public void getReplyDelete(@RequestParam("rno") int rno,
+							@ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception {
+		logger.info("reply delete");
+			
+		ReplyVO vo = null;
+			
+		vo = RepService.readReplySelect(rno);
+			
+		model.addAttribute("readReply", vo);
+		model.addAttribute("scri", scri);
+	}
 }

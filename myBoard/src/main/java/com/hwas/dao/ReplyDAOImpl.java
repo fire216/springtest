@@ -21,8 +21,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 	
 	//댓글 조회
 	@Override
-	public List<ReplyVO> readReply(int bno) throws Exception {
-		
+	public List<ReplyVO> readReply(int bno) throws Exception {	
 		return sql.selectList(namespace + ".readReply", bno);
 	}
 
@@ -32,4 +31,25 @@ public class ReplyDAOImpl implements ReplyDAO {
 		sql.insert(namespace + ".writeReply", vo);
 	}
 
+	//특정 댓글 조회
+	@Override
+	public ReplyVO readReplySelect(int rno) throws Exception {
+		return sql.selectOne(namespace + ".readReplySelect", rno);
+	}
+
+	//댓글 수정
+	@Override
+	public void replyUpdate(ReplyVO vo) throws Exception {
+		sql.update(namespace + ".updateReply", vo);
+		
+	}
+
+	//댓글 삭제
+	@Override
+	public void replyDelete(ReplyVO vo) throws Exception {
+		sql.delete(namespace + ".deleteReply", vo);
+		
+	}
+
+	
 }
