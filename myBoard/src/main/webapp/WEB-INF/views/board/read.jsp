@@ -11,10 +11,19 @@
 <!-- JQuery -->
 <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
-	<div id="root">
+	<div class="container">
 		<header>
 			<%@include file="include/header.jsp"%>
 		</header>
@@ -25,7 +34,7 @@
 		<hr />
 
 
-		<section id="container">
+		<section>
 
 			<form role="form" method="post" autocomplete="off">
 			
@@ -34,29 +43,37 @@
 				<input type = "hidden" id="searchType" name="searchType" value="${scri.searchType }" readonly="readonly" />
 				<input type = "hidden" id="keyword" name="keyword" value="${scri.keyword }" readonly="readonly" />
 			
-				<p>
-					<label for="bno">글 번호</label><input type="text" id="bno" name="bno"
-						value="${read.bno}" readonly="readonly" />
-				</p>
+				<div class="form-group">
+					<label for="bno" class="control-label">글 번호</label>			
+						<input type="text" id="bno" name="bno" class="form-control" value="${read.bno}" readonly="readonly" />				 	
+				</div>
+				
 			</form>
-			<p>
-				<label for="title">글 제목</label><input type="text" id="title"
-					name="title" value="${read.title}" readonly="readonly" />
-			</p>
-			<p>
-				<label for="content">글 내용</label>
-				<textarea id="content" name="content" readonly="readonly">${read.content} </textarea>
-			</p>
-			<p>
-				<label for="writer">작성자</label><input type="text" id="writer"
-					name="writer" value="${read.writer}" readonly="readonly" /><br />
-				<label>작성날짜</label><span><fmt:formatDate
-						value="${read.regDate}" pattern="yyyy-MM-dd" /></span>
-			</p>
-			<p>
-				<button type="button" id="list_btn">목록</button>
-				<button type="button" id="modify_btn">수정</button>
-				<button type="button" id="delete_btn">삭제</button>
+		
+				<div class="form-group">
+					<label for="title" class="control-label">글 제목</label>				
+						<input type="text" id="title" name="title" class="form-control" value="${read.title}" readonly="readonly" />
+				</div>
+			
+				<div class="form-group">
+					<label for="content" class="control-label">글 내용</label>					
+					<textarea id="content" name="content" class="form-control" readonly="readonly">${read.content} </textarea>						
+				</div>
+			
+			<div class="form-group">
+				<label for="writer" class="control-label">작성자</label>				
+				<input type="text" id="writer" name="writer" value="${read.writer}" class="form-control" readonly="readonly" />
+			</div>
+			
+			<div class="form-group">				
+				<label class="control-label">작성날짜</label>				
+				<span><fmt:formatDate value="${read.regDate}" pattern="yyyy-MM-dd"/></span>				
+			</div>
+			
+			<div class="form-group">
+				<button type="button" id="list_btn" class="btn btn-primary">목록</button>
+				<button type="button" id="modify_btn" class="btn btn-warning">수정</button>
+				<button type="button" id="delete_btn" class="btn btn-danger">삭제</button>
 
 				<script>
 					//폼을 변수에 저장
@@ -83,22 +100,23 @@
 						formObj.submit();
 					});
 				</script>
-			</p>
+			</div>
 
 		<div id="reply">
 			<ol class="replyList">
 				<c:forEach items="${repList}" var="repList">
 				<li>
 					<p>
-						작성자 : ${repList.writer}<br/>
-						작성 날짜 : <fmt:formatDate value = "${repList.regDate}" pattern="yyyy-MM-dd" />
+					<span class="glyphicon glyphicon-user"></span>
+						 ${repList.writer}
+						 (<fmt:formatDate value = "${repList.regDate}" pattern="yyyy-MM-dd" />)
 					</p>
 					
-					<p>${repList.content}</p>
+					<p class = "bg-info">${repList.content}</p>
 					
-					<p>
-						<button type="button" class="replyUpdate" data-rno="${repList.rno}">수정</button>
-						<button type="button" class="replyDelete" data-rno="${repList.rno}">삭제</button>
+					<div class="form-group">
+						<button type="button" class="replyUpdat btn btn-warning btn-xs" data-rno="${repList.rno}">수정</button>
+						<button type="button" class="replyDelete btn btn-danger btn-xs" data-rno="${repList.rno}">삭제</button>
 						
 						<script>
 							$(".replyUpdate").click(function(){
@@ -119,13 +137,13 @@
 										+ "&rno=" + $(this).attr("data-rno");
 							});
 						</script>
-					</p>
+					</div>
 				</li>
 				</c:forEach>
 			</ol>
 			
 			<section class="replyForm">
-				<form role = "form" method = "post" autocomplete="off">
+				<form role = "form" method = "post" autocomplete="off" class="form-horizontal">
 					
 				<input type = "hidden" id="bno" name="bno" value="${read.bno }" readonly="readonly" />
 				<input type = "hidden" id="page" name="page" value="${scri.page }" readonly="readonly" />
@@ -133,18 +151,24 @@
 				<input type = "hidden" id="searchType" name="searchType" value="${scri.searchType }" readonly="readonly" />
 				<input type = "hidden" id="keyword" name="keyword" value="${scri.keyword }" readonly="readonly" />
 					
-				<p>
-					<label for="writer">작성자</label>
-					<input type="text" id="writer" name="writer" />
-				</p>
-				<p>
-					<label for="content">댓글 내용</label>
-					<textarea id="content" name="content"></textarea>
-				</p>
+				<div class="form-group">
+					<label for="writer" class="col-sm-2 control-label">작성자</label>
+					<div class="col-sm-10">
+						<input type="text" id="writer" name="writer" class="form-control" />
+					</div>
+				</div>
+				
+				<div class ="form-group">
+					<label for="content" class="col-sm-2 control-label">댓글 내용</label>
+					<div class="col-sm-10">
+						<textarea id="content" name="content" class="form-control"></textarea>
+					</div>
+				</div>
 					
-				<p>
-					<button type="button" class="repSubmit">작성</button>
-					
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="button" class="repSubmit btn btn-success">작성</button>
+					</div>
 					<script>
 						var formObj = $(".replyForm form[role='form']");
 						
@@ -154,7 +178,7 @@
 						});
 						
 					</script>
-				</p>
+				</div>
 				
 				</form>
 			</section>
