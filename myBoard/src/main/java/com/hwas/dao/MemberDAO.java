@@ -1,0 +1,9 @@
+package com.hwas.dao;
+
+import com.hwas.domain.MemberVO;
+
+public interface MemberDAO {
+
+	//회원가입
+	public void register(MemberVO vo) throws Exception;
+}
