@@ -19,4 +19,11 @@ public class MemberServiceImpl implements MemberService {
 		dao.register(vo);		
 	}
 
+	//로그인
+	@Override
+	public MemberVO login(MemberVO vo) throws Exception {
+		
+		return dao.login(vo);
+	}
+
 }
