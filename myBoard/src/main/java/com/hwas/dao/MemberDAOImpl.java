@@ -29,4 +29,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return sql.selectOne(namespace + ".login", vo);
 	}
 
+	//회원가입
+	@Override
+	public void modify(MemberVO vo) throws Exception {
+		sql.update(namespace + ".modify", vo);
+	}
+
 }

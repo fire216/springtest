@@ -20,4 +20,11 @@
   		and userPass = #{userPass}
   </select>
   
+  <!-- 회원정보 수정 -->
+  <update id="modify">
+  	update myMember
+  		set
+  		 	userPass = #{userPass}
+  		where userName = #{userName}
+  </update>
   </mapper>
