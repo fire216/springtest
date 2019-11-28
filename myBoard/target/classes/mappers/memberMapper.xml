@@ -40,4 +40,12 @@
   	select userId from myMember
   	where userId = #{userId}
   </select>
+  
+  <!-- 로그인 - 암호화 적용 -->
+  <select id="loginBcrypt" resultType = "com.hwas.domain.MemberVO">
+  	select
+  		userId, userName, userPass
+  	from myMember
+  	where userId=#{userId}
+  </select>
   </mapper>

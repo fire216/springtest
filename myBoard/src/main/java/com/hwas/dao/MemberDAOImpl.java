@@ -26,7 +26,8 @@ public class MemberDAOImpl implements MemberDAO {
 	//로그인
 	@Override
 	public MemberVO login(MemberVO vo) throws Exception {	
-		return sql.selectOne(namespace + ".login", vo);
+		//return sql.selectOne(namespace + ".login", vo);
+		return sql.selectOne(namespace + ".loginBcrypt", vo);
 	}
 
 	//회원가입
