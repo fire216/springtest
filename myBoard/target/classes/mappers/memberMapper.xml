@@ -13,7 +13,7 @@
   <!-- 로그인 -->
   <select id="login" resultType="com.hwas.domain.MemberVO">
   	select 
-  		userId, userName
+  		userId, userName, userPass
   	from
   		myMember
   	where userId = #{userId}
@@ -27,4 +27,11 @@
   		 	userPass = #{userPass}
   		where userName = #{userName}
   </update>
+  
+  <!-- 회원탈퇴 -->
+  <delete id="remove">
+  	delete from myMember
+  		where userId = #{userId}
+  			and userPass = #{userPass}
+  </delete>
   </mapper>

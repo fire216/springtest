@@ -87,4 +87,34 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
+	
+	//회원탈퇴 get
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public void getRemove() throws Exception {
+		logger.info("get remove");
+	}
+	
+	//회원탈퇴 post
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public String postRemove(HttpSession session, MemberVO vo, RedirectAttributes rttr) throws Exception {
+		logger.info("post remove");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		
+		String oldPass = member.getUserPass();
+		String newPass = vo.getUserPass();
+		
+		//.equals() 변수가 가진 값자체를 비교 || == -> 변수가 사용하는 주소를 비교
+		if(!(oldPass.equals(newPass))) {
+			rttr.addFlashAttribute("msg", false);
+			return "redirect:/member/remove";
+		}
+		
+		service.remove(vo);
+		
+		session.invalidate();
+		
+		return "redirect:/";
+		
+	}
 }

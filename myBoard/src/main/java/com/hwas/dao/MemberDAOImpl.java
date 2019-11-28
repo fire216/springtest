@@ -35,4 +35,11 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.update(namespace + ".modify", vo);
 	}
 
+	//회원탈퇴
+	@Override
+	public void remove(MemberVO vo) throws Exception {
+		sql.delete(namespace + ".remove", vo);
+		
+	}
+
 }
