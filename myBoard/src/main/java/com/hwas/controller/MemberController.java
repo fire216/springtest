@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hwas.domain.MemberVO;
@@ -115,6 +116,25 @@ public class MemberController {
 		session.invalidate();
 		
 		return "redirect:/";
+		
+	}
+	
+	//회원 확인
+	@ResponseBody
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	public int postIdCheck(HttpServletRequest req) throws Exception {
+		logger.info("post idCheck");
+		
+		String userId = req.getParameter("userId");
+		MemberVO idCheck = service.idCheck(userId);
+		
+		int result = 0;
+		
+		if(idCheck != null) {
+			result = 1;
+		}
+		
+		return result;
 		
 	}
 }
